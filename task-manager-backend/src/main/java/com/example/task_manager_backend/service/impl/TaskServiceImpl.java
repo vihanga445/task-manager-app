@@ -3,10 +3,13 @@ package com.example.task_manager_backend.service.impl;
 
 import com.example.task_manager_backend.DTO.TaskDto;
 import com.example.task_manager_backend.entity.Task;
+import com.example.task_manager_backend.entity.User;
 import com.example.task_manager_backend.exception.ResourceNotFoundException;
 import com.example.task_manager_backend.mapper.TaskMapper;
 import com.example.task_manager_backend.repository.TaskRepository;
+import com.example.task_manager_backend.repository.UserRepository;
 import com.example.task_manager_backend.service.TaskService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +19,32 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository; // Add this
 
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
+    }
+
+    private User getAuthenticatedUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
+    public List<TaskDto> getAllTasks() {
+        User user = getAuthenticatedUser();
+        // Only return THIS user's tasks
+        return taskRepository.findByUserId(user.getId()).stream()
+                .map(TaskMapper::mapToTaskDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public TaskDto createTask(TaskDto taskDto) {
         Task task = TaskMapper.mapToTask(taskDto);
+        task.setUser(getAuthenticatedUser()); // Set the owner!
         return TaskMapper.mapToTaskDto(taskRepository.save(task));
     }
 
@@ -34,27 +55,32 @@ public class TaskServiceImpl implements TaskService {
         return TaskMapper.mapToTaskDto(task);
     }
 
-    @Override
-    public List<TaskDto> getAllTasks() {
-        return taskRepository.findAll().stream()
-                .map(TaskMapper::mapToTaskDto)
-                .collect(Collectors.toList());
-    }
+
 
     @Override
     public TaskDto updateTask(Long id, TaskDto updatedTask) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+
+        // SECURITY CHECK: Is the logged-in user the owner?
+        if (!task.getUser().getId().equals(getAuthenticatedUser().getId())) {
+            throw new RuntimeException("Not authorized to update this task");
+        }
+
         task.setTitle(updatedTask.getTitle());
         task.setDescription(updatedTask.getDescription());
         task.setStatus(updatedTask.getStatus());
         return TaskMapper.mapToTaskDto(taskRepository.save(task));
     }
-
     @Override
     public void deleteTask(Long id) {
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+        Task task = taskRepository.findById(id).orElseThrow();
+
+        // SECURITY CHECK: Is the logged-in user the owner?
+        if (!task.getUser().getId().equals(getAuthenticatedUser().getId())) {
+            throw new RuntimeException("Not authorized to delete this task");
+        }
+
         taskRepository.delete(task);
     }
 
