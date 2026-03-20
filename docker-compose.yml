@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  
+  db:
+    image: mysql:8.0
+    container_name: task-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 15403
+      MYSQL_DATABASE: task_manager
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  
+  backend:
+    build: ./task-manager-backend
+    container_name: task-backend
+    ports:
+      - "8091:8091" 
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/task_manager?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=15403
+      - JWT_SECRET=treinetic_assignment_secret_key_2026
+
+  
+  frontend:
+    build: ./task-manager-frontend
+    container_name: task-frontend
+    ports:
+      - "4200:80" 
+    depends_on:
+      - backend
+    restart: on-failure
