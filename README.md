@@ -155,27 +155,44 @@ All services communicate through an internal Docker network.
 ## 🖼️ Screenshots
 
 ### 🏠 Home Page
-![Home Page](screenshots/home.png)
+
+<img width="1907" height="911" alt="Screenshot 2026-03-20 203903" src="https://github.com/user-attachments/assets/32cd397c-4992-4eb6-90b6-d0ce173566e2" />
 
 ### 📝 Register Page
-![Register Page](screenshots/register.png)
+
+
+<img width="1914" height="906" alt="Screenshot 2026-03-20 203947" src="https://github.com/user-attachments/assets/54329c1e-9b6c-45f5-89c8-625c9ecf02d9" />
 
 ### 🔐 Login Page
-![Login Page](screenshots/login.png)
+
+<img width="1900" height="914" alt="Screenshot 2026-03-20 204019" src="https://github.com/user-attachments/assets/51246549-1d57-4a11-9d00-de1270354c29" />
+
+
 
 ### 📋 All Tasks Page
-![All Tasks](screenshots/tasks.png)
+
+
+<img width="1895" height="916" alt="Screenshot 2026-03-20 204523" src="https://github.com/user-attachments/assets/4654ce15-5abe-486d-ac91-71071234d48a" />
+
 
 ### ➕ Add Task Page
-![Add Task](screenshots/add-task.png)
+
+
+<img width="1908" height="921" alt="Screenshot 2026-03-20 204511" src="https://github.com/user-attachments/assets/c428ee99-336c-4020-b0f7-ee8cb6537212" />
+
 
 ### ✏️ Edit Task Page
-![Edit Task](screenshots/edit-task.png)
+
+<img width="1903" height="899" alt="Screenshot 2026-03-20 204556" src="https://github.com/user-attachments/assets/243d7a41-3448-4a2a-932a-1b36806073df" />
 
 ### 📄 Task Details Page
-![Task Details](screenshots/task-details.png)
+
+<img width="1907" height="907" alt="Screenshot 2026-03-20 204543" src="https://github.com/user-attachments/assets/107a5b1e-4e0e-4f97-9099-556bd3e37c9e" />
+
 
 ### 🗑️ Delete Task Confirmation
-![Delete Task](screenshots/delete-task.png)
+
+<img width="1910" height="903" alt="Screenshot 2026-03-20 204614" src="https://github.com/user-attachments/assets/2480c84d-bbc6-45da-8553-cc93c1edf8c0" />
+
 
 
