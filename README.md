@@ -1,4 +1,4 @@
-# 📝 Task Manager Pro
+# 📝 Task Manager App
 
 A fully containerized full‑stack Task Management application built with:
 
