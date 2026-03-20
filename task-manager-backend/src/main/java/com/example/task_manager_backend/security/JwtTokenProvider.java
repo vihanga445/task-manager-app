@@ -16,7 +16,7 @@ public class JwtTokenProvider {
     @Value("${JWT_SECRET}")
     private String jwtSecret;
 
-    private final long jwtExpirationDate = 604800000; // 7 days
+    private final long jwtExpirationDate = 604800000;
 
     public String generateToken(String username) {
         Date currentDate = new Date();

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
-    private final UserRepository userRepository; // Add this
+    private final UserRepository userRepository;
 
     public TaskServiceImpl(TaskRepository taskRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
@@ -35,7 +35,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDto> getAllTasks() {
         User user = getAuthenticatedUser();
-        // Only return THIS user's tasks
         return taskRepository.findByUserId(user.getId()).stream()
                 .map(TaskMapper::mapToTaskDto)
                 .collect(Collectors.toList());
@@ -62,7 +61,6 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
 
-        // SECURITY CHECK: Is the logged-in user the owner?
         if (!task.getUser().getId().equals(getAuthenticatedUser().getId())) {
             throw new RuntimeException("Not authorized to update this task");
         }
@@ -76,7 +74,6 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(Long id) {
         Task task = taskRepository.findById(id).orElseThrow();
 
-        // SECURITY CHECK: Is the logged-in user the owner?
         if (!task.getUser().getId().equals(getAuthenticatedUser().getId())) {
             throw new RuntimeException("Not authorized to delete this task");
         }

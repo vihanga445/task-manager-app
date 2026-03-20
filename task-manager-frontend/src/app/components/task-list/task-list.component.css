@@ -1,0 +1,11 @@
+.task-link {
+  color: #212529; /* Dark color */
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.task-link:hover {
+  color: #0d6efd; /* Changes to Primary Blue on hover */
+  text-decoration: underline;
+  cursor: pointer;
+}
