@@ -2,10 +2,10 @@
 
 A fully containerized full‑stack Task Management application built with:
 
-- **Spring Boot 3** — Backend REST API  
-- **Angular 19** — Frontend UI  
-- **MySQL 8** — Database  
-- **Docker Compose** — Orchestration  
+- Spring Boot — Backend REST API  
+- Angular — Frontend UI  
+- MySQL  — Database  
+- Docker Compose — Orchestration  
 
 This project is designed for seamless setup and execution using Docker Desktop.
 
@@ -13,7 +13,7 @@ This project is designed for seamless setup and execution using Docker Desktop.
 
 ## 🚀 Running the Application
 
-This project is fully containerized. All services — the Angular frontend, Spring Boot backend, and MySQL database — run through Docker Desktop without requiring any additional local installations.
+This project is fully containerized. All services — the Angular frontend, Spring Boot backend, and MySQL database — run through Docker Desktop.
 
 ### 1. Clone the Repository
 
@@ -44,7 +44,7 @@ Docker will automatically:
 | Service | URL |
 |--------|-----|
 | **Frontend (Angular)** | http://localhost:4200 |
-| **Backend API (Spring Boot)** | http://localhost:8091/api |
+| **Backend API (Spring Boot)** | http://localhost:8091 |
 
 ---
 
@@ -60,15 +60,6 @@ The MySQL database runs inside Docker, and Hibernate initializes all required ta
 | **Host Port** | 3307 |
 | **Root Password** | `15403` |
 
-### Optional: Connect via MySQL Workbench
-
-```
-Host: localhost
-Port: 3307
-User: root
-Password: 15403
-Database: task_manager
-```
 
 ---
 
@@ -84,27 +75,21 @@ Since the database starts empty:
 2. Create a new account  
 3. Log in using your credentials  
 
-### Recommended Test Credentials
-
-| Field | Value |
-|-------|--------|
-| **Username** | `alpha_tester_2026` |
-| **Password** | `DockerTask` |
 
 ---
 
 ## 📦 Tech Stack
 
 ### **Backend**
-- Java 17  
-- Spring Boot 3  
+- Java  
+- Spring Boot  
 - Spring Security (JWT)  
 - Spring Data JPA  
-- MySQL 8  
+- MySQL 
 - Docker  
 
 ### **Frontend**
-- Angular 19  
+- Angular  
 - TypeScript  
 - Angular Material  
 - JWT Interceptor  
